@@ -3,31 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aesther Chat</title>
+    <title>Aesther Chatbot</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="chat-container">
-        <div class="header">
-            <h1>AESTHER</h1>
-            <div class="model-selection">
-                <label for="model">Model:</label>
-                <select id="model">
-                    <option value="default">Default</option>
-                    <!-- Ajoutez d'autres modèles si nécessaire -->
-                </select>
-                <button id="reset-chat">Reset Chat</button>
-            </div>
+        <h1>AESTHER</h1>
+        <div id="chatbox">
+            <div id="chat-log"></div>
         </div>
-        <div class="chat-box">
-            <div class="chat-output" id="chat-output">
-                <!-- Messages du chat s'afficheront ici -->
-            </div>
-            <div class="chat-input">
-                <input type="text" id="user-input" placeholder="Type your message...">
-                <button id="send-button">Send</button>
-            </div>
-        </div>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button id="send-button">Send</button>
     </div>
     <script src="script.js"></script>
 </body>
