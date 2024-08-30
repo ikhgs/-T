@@ -1,7 +1,7 @@
 {
   "name": "aesther-app",
   "version": "1.0.0",
-  "description": "Aesther application using Node.js and Gemini API",
+  "description": "Aesther application using Node.js and new API",
   "type": "module",
   "scripts": {
     "start": "node server.mjs"
