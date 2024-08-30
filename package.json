@@ -1,10 +1,10 @@
 {
-  "name": "my-chatbot-project",
+  "name": "aesther-app",
   "version": "1.0.0",
-  "description": "A simple chatbot interface using Node.js and Google Gemini API.",
-  "main": "server.js",
+  "description": "Aesther application using Node.js and Gemini API",
+  "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.mjs"
   },
   "dependencies": {
     "express": "^4.18.2",
