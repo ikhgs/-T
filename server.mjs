@@ -24,8 +24,14 @@ app.post('/api/generate', async (req, res) => {
             })
         });
 
+        // Vérification du statut de la réponse
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
-        res.json({ text: data.text || 'No response received' });
+        console.log('API Response:', data); // Pour débogage
+        res.json({ text: data.text || 'No text field in response' });
     } catch (error) {
         console.error('Erreur:', error);
         res.status(500).json({ error: 'Erreur de serveur' });
