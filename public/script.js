@@ -1,5 +1,6 @@
 document.getElementById('send-button').addEventListener('click', async () => {
-    const prompt = document.getElementById('prompt-input').value;
+    const promptInput = document.getElementById('prompt-input');
+    const prompt = promptInput.value;
     if (prompt.trim() === '') return;
 
     const responseBox = document.getElementById('response');
@@ -15,8 +16,11 @@ document.getElementById('send-button').addEventListener('click', async () => {
         });
 
         const data = await response.json();
-        responseBox.innerHTML = `<p>${data.text}</p>`;
+        responseBox.innerHTML += `<p>User: ${prompt}</p><p>Bot: ${data.text}</p>`;
     } catch (error) {
         responseBox.innerHTML = '<p>Error occurred. Please try again.</p>';
     }
+
+    // Effacer le message de l'utilisateur
+    promptInput.value = '';
 });
