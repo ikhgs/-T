@@ -1,52 +1,34 @@
 document.getElementById('send-button').addEventListener('click', sendMessage);
-document.getElementById('reset-chat').addEventListener('click', resetChat);
-
-const apiKey = 'AIzaSyBZT3HnSDr_T3xdlHN5ktVQmqeB_dvn7LY';
-let chatHistory = [];
 
 function sendMessage() {
     const userInput = document.getElementById('user-input').value;
-    if (!userInput) return;
+    if (userInput.trim() === '') return;
 
-    appendMessage('user', userInput);
-    document.getElementById('user-input').value = '';
+    appendMessage('User', userInput);
 
-    // Envoyer la requête à l'API Gemini
-    fetch('https://generativeai.googleapis.com/v1beta2/models/gemini-1-5-pro:generateText', {
+    fetch('/api/chat', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            prompt: {
-                text: userInput
-            },
-            chat: {
-                history: chatHistory
-            }
-        })
+        body: JSON.stringify({ message: userInput }),
     })
     .then(response => response.json())
     .then(data => {
-        const botMessage = data.text || 'No response received';
-        appendMessage('bot', botMessage);
-        chatHistory.push({ role: 'bot', content: botMessage });
+        appendMessage('AESTHER', data.reply);
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        appendMessage('AESTHER', 'Something went wrong.');
+    });
+
+    document.getElementById('user-input').value = '';
 }
 
-function appendMessage(role, text) {
-    const chatOutput = document.getElementById('chat-output');
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('chat-message');
-    messageDiv.classList.add(role);
-    messageDiv.textContent = text;
-    chatOutput.appendChild(messageDiv);
-    chatOutput.scrollTop = chatOutput.scrollHeight;
-}
-
-function resetChat() {
-    chatHistory = [];
-    document.getElementById('chat-output').innerHTML = '';
+function appendMessage(sender, message) {
+    const chatLog = document.getElementById('chat-log');
+    const messageElement = document.createElement('div');
+    messageElement.textContent = `${sender}: ${message}`;
+    chatLog.appendChild(messageElement);
+    chatLog.scrollTop = chatLog.scrollHeight;
 }
