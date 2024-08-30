@@ -2,7 +2,7 @@ import express from 'express';
 import fetch from 'node-fetch';
 
 const app = express();
-const history = [];
+const history = []; // Stockage de l'historique des messages
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -14,7 +14,7 @@ app.post('/api/generate', async (req, res) => {
     history.push({ role: 'user', text: prompt });
 
     try {
-        const response = await fetch(`https://discussion-continue-gem29.vercel.app/api?ask=${encodeURIComponent(prompt)}`, {
+        const response = await fetch(`https://llama3-70b.vercel.app/api?ask=${encodeURIComponent(prompt)}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
