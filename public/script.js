@@ -4,7 +4,8 @@ document.getElementById('send-button').addEventListener('click', async () => {
     if (prompt.trim() === '') return;
 
     const responseBox = document.getElementById('response');
-    responseBox.innerHTML = '<p>Loading...</p>';
+    responseBox.innerHTML += `<p>User: ${prompt}</p>`;
+    responseBox.innerHTML += '<p>Loading...</p>';
 
     try {
         const response = await fetch('/api/generate', {
@@ -16,9 +17,9 @@ document.getElementById('send-button').addEventListener('click', async () => {
         });
 
         const data = await response.json();
-        responseBox.innerHTML += `<p>User: ${prompt}</p><p>Bot: ${data.text}</p>`;
+        responseBox.innerHTML += `<p>Bot: ${data.text}</p>`;
     } catch (error) {
-        responseBox.innerHTML = '<p>Error occurred. Please try again.</p>';
+        responseBox.innerHTML += '<p>Error occurred. Please try again.</p>';
     }
 
     // Effacer le message de l'utilisateur
