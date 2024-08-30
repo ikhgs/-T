@@ -1,19 +1,14 @@
-const express = require('express');
-const fetch = require('node-fetch');
-const path = require('path');
+import express from 'express';
+import fetch from 'node-fetch';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Clé API Gemini directement dans le code
 const apiKey = 'AIzaSyBZT3HnSDr_T3xdlHN5ktVQmqeB_dvn7LY';
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 app.use(express.json());
 
-// Route pour l'API de chat
-app.post('/api/chat', async (req, res) => {
-    const userMessage = req.body.message;
+app.post('/api/generate', async (req, res) => {
+    const prompt = req.body.prompt;
 
     try {
         const response = await fetch('https://generativeai.googleapis.com/v1beta2/models/gemini-1-5-pro:generateText', {
@@ -24,22 +19,19 @@ app.post('/api/chat', async (req, res) => {
             },
             body: JSON.stringify({
                 prompt: {
-                    text: userMessage
+                    text: prompt
                 }
             })
         });
 
         const data = await response.json();
-        const botReply = data.text || 'No response received';
-        res.json({ reply: botReply });
-
+        res.json({ text: data.text || 'No response received' });
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ reply: 'Internal Server Error' });
+        console.error('Erreur:', error);
+        res.status(500).json({ error: 'Erreur de serveur' });
     }
 });
 
-// Démarrer le serveur
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(3000, () => {
+    console.log('Server running on http://localhost:3000');
 });
