@@ -2,7 +2,7 @@ import express from 'express';
 import fetch from 'node-fetch';
 
 const app = express();
-const apiKey = 'AIzaSyBZT3HnSDr_T3xdlHN5ktVQmqeB_dvn7LY';
+const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyBZT3HnSDr_T3xdlHN5ktVQmqeB_dvn7LY';
 
 app.use(express.static('public'));
 app.use(express.json());
